@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Дильмухамедова Залина</title>
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <style>
+    table {
+      border-collapse: collapse;
+    }
+    th, td {
+      border: 1px solid black;
+      padding: 5px;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <label for="date">Введите дату в формате ДД.ММ.ГГГГ:</label>
+  <input type="text" id="date" name="date" placeholder="ДД.ММ.ГГГГ">
+  <button id="generate">Сформировать календарь</button>
+
+  <table id="calendar"></table>
+
+  <script>
+    $(document).ready(function() {
+      $('#generate').click(function() {
+        var inputDate = $('#date').val();
+        var dateArray = inputDate.split('.');
+        var day = parseInt(dateArray[0]);
+        var month = parseInt(dateArray[1]) - 1;
+        var year = parseInt(dateArray[2]);
+
+        var currentDate = new Date(year, month, day);
+        var currentMonth = currentDate.getMonth();
+        var currentYear = currentDate.getFullYear();
+
+        var daysOfWeek = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+        var firstDayOfMonth = new Date(currentYear, currentMonth, 1).getDay();
+        var daysInMonth = new Date(currentYear, currentMonth + 1, 0).getDate();
+
+        $('#calendar').empty();
+
+        var headerRow = $('<tr></tr>');
+        for (var i = 0; i < 7; i++) {
+          var headerCell = $('<th></th>').text(daysOfWeek[i]);
+          headerRow.append(headerCell);
+        }
+        $('#calendar').append(headerRow);
+
+        var currentRow = $('<tr></tr>');
+        for (var i = 0; i < firstDayOfMonth; i++) {
+          var emptyCell = $('<td></td>').text('');
+          currentRow.append(emptyCell);
+        }
+
+        var dayCount = 1;
+        while (dayCount <= daysInMonth) {
+          if (currentRow.children().length === 7) {
+            $('#calendar').append(currentRow);
+            currentRow = $('<tr></tr>');
+          }
+
+          var dayCell = $('<td></td>').text(dayCount);
+          currentRow.append(dayCell);
+          dayCount++;
+        }
+
+        if (currentRow.children().length > 0) {
+          $('#calendar').append(currentRow);
+        }
+      });
+    });
+  </script>
+</body>
+</html>

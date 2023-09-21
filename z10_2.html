@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Дильмухамедова Залина</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+    }
+    .container {
+      width: 300px;
+      margin: 0 auto;
+      padding: 20px;
+      background-color: #ff78a5;
+      border: 1px solid #f894c3;
+      border-radius: 5px;
+    }
+    .button {
+      display: inline-block;
+      padding: 10px 15px;
+      background-color: #ff00bf;
+      color: #fff;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+      margin: 5px;
+    }
+    .button:hover {
+      background-color: #fd85cf;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>Калькулятор</h2>
+    <div>
+      <input type="text" id="input" placeholder="Введите число или используйте клавиатуру" onkeypress="checkInput(event)" />
+    </div>
+    <div>
+      <button class="button" onclick="addToInput('7')">7</button>
+      <button class="button" onclick="addToInput('8')">8</button>
+      <button class="button" onclick="addToInput('9')">9</button>
+      <button class="button" onclick="addToInput('+')">+</button>
+    </div>
+    <div>
+      <button class="button" onclick="addToInput('4')">4</button>
+      <button class="button" onclick="addToInput('5')">5</button>
+      <button class="button" onclick="addToInput('6')">6</button>
+      <button class="button" onclick="addToInput('-')">-</button>
+    </div>
+    <div>
+      <button class="button" onclick="addToInput('1')">1</button>
+      <button class="button" onclick="addToInput('2')">2</button>
+      <button class="button" onclick="addToInput('3')">3</button>
+      <button class="button" onclick="addToInput('*')">*</button>
+    </div>
+    <div>
+      <button class="button" onclick="addToInput('0')">0</button>
+      <button class="button" onclick="addToInput('.')">.</button>
+      <button class="button" onclick="calculate()">=</button>
+      <button class="button" onclick="addToInput('/')">/</button>
+    </div>
+    <div id="result"></div>
+    <div>
+      <button class="button" onclick="saveResult()">Сохранить в память</button>
+    </div>
+    <div id="memory"></div>
+  </div>
+
+  <script>
+    // Функция для проверки, что введен символ является числом или оператором
+    function checkInput(evt) {
+      var charCode = (evt.which) ? evt.which : event.keyCode;
+      if (charCode != 46 && charCode > 31 && (charCode < 48 || charCode > 57) && (charCode < 42 || charCode > 47))
+        return false;
+      return true;
+    }
+
+    // Функция для добавления символа в поле ввода
+    function addToInput(value) {
+      document.getElementById('input').value += value;
+    }
+
+    // Функция для выполнения арифметической операции
+    function calculate() {
+      var input = document.getElementById('input').value;
+      var result = eval(input);
+      document.getElementById('result').innerHTML = 'Результат: ' + result;
+    }
+
+    // Функция для сохранения результата в памяти
+    function saveResult() {
+      var result = document.getElementById('result').textContent;
+      document.getElementById('memory').innerHTML += '<div>' + result + '</div>';
+    }
+  </script>
+</body>
+</html>
